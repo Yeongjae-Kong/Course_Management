@@ -8,7 +8,6 @@ var crudApp = new function() {
 		{ID: '1', Class_Name: '운영체제', Category: '전공필수', credit: 3},
 		{ID: '2', Class_Name: '컴퓨터구조', Category: '전공선택', credit: 4},
 		{ID: '3', Class_Name: '심리학의 이해', Category: '교양필수', credit: 2},
-		{ID: '4', Class_Name: '심리학의 이해', Category: '교양필수', credit: 2, newKey:'newData'},
 	]
 	
 	//선택할 수 있는 항목
@@ -44,6 +43,18 @@ var crudApp = new function() {
 			th.innerHTML = this.col[h];
 			tr.appendChild(th);
 		}
+		
+		//td 작성
+		for(var i = 0; i<this.myClass.length; i++){
+			// table에 행 추가
+			tr = table.insertRow(-1);
+			// table header 길이만큼 순회하며 거기에 매칭되는 데이터 갖고오기
+			for(var j=0; j<this.col.length; j++){
+				var tabCell = tr.insertCell(-1);
+				tabCell.innerHTML = this.myClass[i][this.col[j]];
+			}
+		}
+		
 		var div = document.getElementById('container');
 		div.innerHTML = '수강관리 앱';
 		div.appendChild(table);
