@@ -53,6 +53,40 @@ var crudApp = new function() {
 				var tabCell = tr.insertCell(-1);
 				tabCell.innerHTML = this.myClass[i][this.col[j]];
 			}
+			
+			// update 버튼 만들기
+			this.td = document.createElement('td');
+			tr.appendChild(this.td);
+			var btUpdate = document.createElement('input');
+			btUpdate.setAttribute('type', 'button');
+			btUpdate.setAttribute('value', 'update');
+			btUpdate.setAttribute('id', 'Edit' + i);
+			btUpdate.setAttribute('style', 'background-color:#44CCEB');
+			btUpdate.setAttribute('onclick', 'crudApp.Update(this)');
+			this.td.appendChild(btUpdate);
+			
+			// save 버튼 만들기
+			this.td = document.createElement('td');
+			tr.appendChild(this.td);
+			var btSave = document.createElement('input');
+			btSave.setAttribute('type', 'button');
+			btSave.setAttribute('value', 'Save');
+			btSave.setAttribute('id', 'Save' + i);
+			btSave.setAttribute('style', 'diplay:none;');
+			btSave.setAttribute('onclick', 'crudApp.Save(this)');
+			this.td.appendChild(btSave);
+			
+			// delete 버튼 만들기
+			this.td = document.createElement('td');
+			tr.appendChild(this.td);
+			var btDelete = document.createElement('input');
+			btDelete.setAttribute('type', 'button');
+			btDelete.setAttribute('value', 'Delete');
+			btDelete.setAttribute('id', 'Delete' + i);
+			btDelete.setAttribute('style', 'background-color:#ED5650;');
+			btDelete.setAttribute('onclick', 'crudApp.Delete(this)');
+			this.td.appendChild(btDelete);
+			
 		}
 		
 		var div = document.getElementById('container');
