@@ -93,7 +93,7 @@ var crudApp = new function() {
 		tr = table.insertRow(-1);
 		for (var j = 0; j < this.col.length; j++){
 			var newCell = tr.insertCell(-1);
-		}
+	
 		
 		var div = document.getElementById('container');
 		div.innerHTML = '수강관리 앱';
