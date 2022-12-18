@@ -170,3 +170,4 @@ var crudApp = new function() {
 
 crudApp.createTable();
 
+//221218 2032 왜 Delete 버튼 하나가 없지?
