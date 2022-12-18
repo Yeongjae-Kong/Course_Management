@@ -93,14 +93,80 @@ var crudApp = new function() {
 		tr = table.insertRow(-1);
 		for (var j = 0; j < this.col.length; j++){
 			var newCell = tr.insertCell(-1);
+			if (j>=1) {
+				if (j == 2) {
+					// 카테고리는 보기 중 선택하도록
+					var select = document.createElement('select');
+					select.innerHTML = `<option value=""></option>`;
+					// 선택항목 만들어주기(Category 배열 목록 가져오도록)
+					for(var k =0; k < this.Category.length; k++){
+						select.innerHTML = select.innerHTML+`<option value="${this.Category[k]}">${this.Category[k]}</option>`;
+					}
+					newCell.appendChild(select);
+				}
+				else {
+					var tBox = document.createElement('input');
+					tBox.setAttribute('type', 'text');
+					tBox.setAttribute('value', '');
+					newCell.appendChild(tBox);
+				}
+			}
+		}
 	
+		//create 버튼 만들기
+		this.td = document.createElement('td');
+		tr.appendChild(this.td);
+		var btCreate = document.createElement('input');
+		btDelete.setAttribute('type', 'button');
+		btDelete.setAttribute('value', 'Create');
+		btDelete.setAttribute('id', 'New' + i);
+		btDelete.setAttribute('style', 'background-color:#207DD1;');
+		btDelete.setAttribute('onclick', 'crudApp.CreateNew(this)');
+		this.td.appendChild(btDelete);
+		
 		
 		var div = document.getElementById('container');
 		div.innerHTML = '수강관리 앱';
 		div.appendChild(table);
 	}
 	
+	// Delete 메서드
+	this.Delete = (oButton) => {
+		// console.log(oButton); //Delete 버튼이 눌린 row에 해당하는 input 태그가 맞는지 개발자 도구로 확인(=몇번째 delete 버튼이 눌렸냐)
+		var targetIdx = oButton.parentNode.parentNode.rowIndex;
+		this.myClass.splice((targetIdx-1), 1);
+		this.createTable();
+	}
 	
+	// Create 메서드
+	this.CreateNew = (oButton) => {
+		var writtenIdx = oButton.parentNode.parentNode.rowIndex;
+		var trData = document.getElementById('classTable').rows[writtenIdx];
+		var obj = {};
+		// tr데이터에서 td 속 key:value를 뽑아서 obj 안에 저장
+		for(var i = 1; i<this.col.length; i++){
+			var td = trData.getElementsByTagName("td")[i];
+			//console.log(td);
+			if(td.childNodes[0].getAttribute('type')==='text' || td.childNodes[0].tagName === 'SELECT'){
+				//tag가 맞는지 확인
+				var txtVal = td.childNodes[0].value;
+				//console.log(txtVal);
+				if(txtVal != ''){
+					obj[this.col[i]] = txtVal;
+				}
+				else{
+					obj = '';
+					alert('모든 항목을 입력하세요');
+					break;
+				}
+			}
+		}
+		obj[this.col[0]] = this.myClass.length+1; //자동으로 새ID값이 부여되어 obj의 0번 인덱스에 담긴다.
+		//myClass에 넣어주기
+		this.myClass.push(obj);
+		this.createTable();//refresh
+	}
 }
 
 crudApp.createTable();
+
